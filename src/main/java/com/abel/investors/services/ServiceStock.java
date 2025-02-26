@@ -19,7 +19,7 @@ public class ServiceStock implements IServiceStock {
     }
 
     @Override
-    public ResponseEntity<Stock> updateStock(StockRecord stock) {
+    public ResponseEntity<Stock> updateStock(StockRecord stock, UUID id) {
         return null;
     }
 

@@ -20,7 +20,7 @@ public class ServiceBillingAddress implements IServiceBillingAddress {
     }
 
     @Override
-    public ResponseEntity<BillingAddress> updateBillingAddress(BillingAddressRecord billingAddress) {
+    public ResponseEntity<BillingAddress> updateBillingAddress(BillingAddressRecord billingAddress, UUID id) {
         return null;
     }
 

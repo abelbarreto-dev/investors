@@ -20,7 +20,7 @@ public class ServiceAccount implements IServiceAccount{
     }
 
     @Override
-    public ResponseEntity<Account> updateAccount(AccountRecord account) {
+    public ResponseEntity<Account> updateAccount(AccountRecord account, UUID id) {
         return null;
     }
 

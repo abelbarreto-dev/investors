@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface IServiceAccount {
     public ResponseEntity<Account> createAccount(AccountRecord account);
-    public ResponseEntity<Account> updateAccount(AccountRecord account);
+    public ResponseEntity<Account> updateAccount(AccountRecord account, UUID id);
     public ResponseEntity<Account> deleteAccount(UUID id);
     public ResponseEntity<Account> getAccountByID(UUID id);
     public ResponseEntity<List<Account>> findAllAccounts();
