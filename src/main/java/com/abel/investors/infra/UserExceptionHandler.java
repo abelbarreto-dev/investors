@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.Instant;
+
 @ControllerAdvice
 public class UserExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UsernameException.class)
     public ResponseEntity<?> usernameExceptionHandler(UsernameException exception) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+        RestErrorResponse response = newRestErrorResponse(exception.getMessage(), 400);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(EmailException.class)
@@ -24,5 +28,11 @@ public class UserExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(PasswordException.class)
     public ResponseEntity<?> passwordExceptionHandler(PasswordException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
+    private RestErrorResponse newRestErrorResponse(String errorMessage, int status) {
+        Instant datetime = Instant.now();
+
+        return new RestErrorResponse(datetime, status, errorMessage);
     }
 }
