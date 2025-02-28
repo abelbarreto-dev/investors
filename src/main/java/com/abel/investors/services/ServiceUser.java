@@ -2,6 +2,7 @@ package com.abel.investors.services;
 
 import com.abel.investors.models.User;
 import com.abel.investors.records.UserRecord;
+import com.abel.investors.repositories.UserRepository;
 import com.abel.investors.utilities.EmailUtility;
 import com.abel.investors.utilities.PasswordUtility;
 import com.abel.investors.utilities.UsernameUtility;
@@ -14,13 +15,19 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class ServiceUser implements IServiceUser {
+    private final UserRepository userRepository;
+
     @Override
     public ResponseEntity<User> createUser(UserRecord user) {
         UsernameUtility.checkUsername(user.username());
         EmailUtility.validateEmail(user.email());
         PasswordUtility.checkPassword(user.password(), 6);
 
-        return null;
+        User newUser = this.parseUserRecordToUser(user);
+
+        User savedUser = this.userRepository.save(newUser);
+
+        return ResponseEntity.ok(savedUser);
     }
 
     @Override
