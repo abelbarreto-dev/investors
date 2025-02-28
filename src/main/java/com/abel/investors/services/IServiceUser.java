@@ -11,5 +11,5 @@ public interface IServiceUser {
     public ResponseEntity<User> updateUser(UserRecord user);
     public ResponseEntity<User> deleteUser(UUID id);
     public ResponseEntity<User> getUserByID(UUID id);
-    public ResponseEntity<User> getUserByEmailAndPassword(UserRecord user);
+    public ResponseEntity<User> getUserByEmailOrUsernameAndPassword(UserRecord user);
 }
