@@ -8,10 +8,14 @@ public class EmailUtility {
             throw new EmailException("email field can't be empty");
         }
 
-        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-
-        if (!email.matches(regex)) {
+        if (!isEmailValid(email)) {
             throw new EmailException("Email contains invalid characters");
         }
+    }
+
+    public static boolean isEmailValid(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
+        return email.matches(regex);
     }
 }
