@@ -6,14 +6,12 @@ import com.abel.investors.utilities.EmailUtility;
 import com.abel.investors.utilities.PasswordUtility;
 import com.abel.investors.utilities.UsernameUtility;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-@NoArgsConstructor
 @AllArgsConstructor
 public class ServiceUser implements IServiceUser {
     @Override
@@ -55,5 +53,15 @@ public class ServiceUser implements IServiceUser {
     @Override
     public ResponseEntity<User> getUserByEmailOrUsernameAndPassword(UserRecord user) {
         return null;
+    }
+
+    protected User parseUserRecordToUser(UserRecord userRecord) {
+        User user = new User();
+
+        user.setUsername(userRecord.username());
+        user.setEmail(userRecord.email());
+        user.setPassword(userRecord.password());
+
+        return user;
     }
 }
