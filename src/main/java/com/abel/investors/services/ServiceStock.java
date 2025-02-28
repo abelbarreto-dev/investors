@@ -3,14 +3,12 @@ package com.abel.investors.services;
 import com.abel.investors.models.Stock;
 import com.abel.investors.records.StockRecord;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-@NoArgsConstructor
 @AllArgsConstructor
 public class ServiceStock implements IServiceStock {
     @Override
