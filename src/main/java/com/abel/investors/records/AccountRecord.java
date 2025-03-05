@@ -1,5 +1,6 @@
 package com.abel.investors.records;
 
-import java.util.UUID;
+import com.abel.investors.models.AccountStock;
+import com.abel.investors.models.User;
 
-public record AccountRecord(UUID user, UUID accountStock, String description) { }
+public record AccountRecord(User user, AccountStock accountStock, String description) { }

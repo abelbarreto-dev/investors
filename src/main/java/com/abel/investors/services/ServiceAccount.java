@@ -1,7 +1,9 @@
 package com.abel.investors.services;
 
+import com.abel.investors.exceptions.AccountNotFoundException;
 import com.abel.investors.models.Account;
 import com.abel.investors.records.AccountRecord;
+import com.abel.investors.repositories.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,28 +14,60 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class ServiceAccount implements IServiceAccount{
+    private final AccountRepository accountRepository;
+
     @Override
     public ResponseEntity<Account> createAccount(AccountRecord account) {
-        return null;
+        Account accountNew = this.parseAccountRecordToAccount(account);
+
+        Account accountSaved = this.accountRepository.save(accountNew);
+
+        return ResponseEntity.ok(accountSaved);
     }
 
     @Override
     public ResponseEntity<Account> updateAccount(AccountRecord account, UUID id) {
-        return null;
+        Account accountToUpdate = this.accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+
+        accountToUpdate.setUser(account.user());
+        accountToUpdate.setAccountStock(account.accountStock());
+        accountToUpdate.setDescription(account.description());
+
+        Account accountUpdated = this.accountRepository.save(accountToUpdate);
+
+        return ResponseEntity.ok(accountUpdated);
     }
 
     @Override
     public ResponseEntity<Account> deleteAccount(UUID id) {
-        return null;
+        Account account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+
+        this.accountRepository.delete(account);
+
+        return ResponseEntity.ok(account);
     }
 
     @Override
     public ResponseEntity<Account> getAccountByID(UUID id) {
-        return null;
+        Account account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+
+        return ResponseEntity.ok(account);
     }
 
     @Override
     public ResponseEntity<List<Account>> findAllAccounts() {
-        return null;
+        List<Account> accounts = accountRepository.findAll();
+
+        return ResponseEntity.ok(accounts);
+    }
+
+    protected Account parseAccountRecordToAccount(AccountRecord accountRecord) {
+        Account account = new Account();
+
+        account.setUser(accountRecord.user());
+        account.setAccountStock(accountRecord.accountStock());
+        account.setDescription(accountRecord.description());
+
+        return account;
     }
 }
