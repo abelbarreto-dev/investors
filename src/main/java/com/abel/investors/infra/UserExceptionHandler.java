@@ -15,7 +15,7 @@ import java.time.Instant;
 public class UserExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UsernameException.class)
     public ResponseEntity<?> usernameExceptionHandler(UsernameException exception) {
-        RestErrorResponse response = newRestErrorResponse(exception.getMessage(), 400);
+        RestErrorResponse response = this.newRestErrorResponse(exception.getMessage(), 400);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
