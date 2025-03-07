@@ -1,5 +1,6 @@
 package com.abel.investors.services;
 
+import com.abel.investors.exceptions.UserNotFoundException;
 import com.abel.investors.models.User;
 import com.abel.investors.records.UserRecord;
 import com.abel.investors.repositories.UserRepository;
@@ -32,34 +33,56 @@ public class ServiceUser implements IServiceUser {
 
     @Override
     public ResponseEntity<User> updateUser(UserRecord user) {
+        User userToUpdate = this.userRepository.findByEmailOrUsername(user.email(), user.username());
+
+        if (userToUpdate == null) {
+            throw new UserNotFoundException("No User found with email or username");
+        }
+
         if (user.email() != null) {
             UsernameUtility.checkUsername(user.email());
+            userToUpdate.setEmail(user.email());
         }
 
         if (user.username() != null) {
             UsernameUtility.checkUsername(user.username());
+            userToUpdate.setUsername(user.username());
         }
 
         if (user.password() != null) {
             PasswordUtility.checkPassword(user.password(), 6);
+            userToUpdate.setPassword(user.password());
         }
 
-        return null;
+        User userUpdated = this.userRepository.save(userToUpdate);
+        return ResponseEntity.ok(userUpdated);
     }
 
     @Override
     public ResponseEntity<User> deleteUser(UUID id) {
-        return null;
+        User user = this.userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+
+        this.userRepository.delete(user);
+
+        return ResponseEntity.ok(user);
     }
 
     @Override
     public ResponseEntity<User> getUserByID(UUID id) {
-        return null;
+        User user = this.userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+
+        return ResponseEntity.ok(user);
     }
 
     @Override
     public ResponseEntity<User> getUserByEmailOrUsernameAndPassword(UserRecord user) {
-        return null;
+        User loginUser = this.userRepository.findByUsernameAndPassword(user.username(), user.password());
+
+        if (loginUser == null) {
+            throw new UserNotFoundException("No User found with this username and password");
+        }
+
+        return ResponseEntity.ok(loginUser);
     }
 
     protected User parseUserRecordToUser(UserRecord userRecord) {

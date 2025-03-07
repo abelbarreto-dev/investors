@@ -40,7 +40,7 @@ public class ServiceAccount implements IServiceAccount{
 
     @Override
     public ResponseEntity<Account> deleteAccount(UUID id) {
-        Account account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+        Account account = this.accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
 
         this.accountRepository.delete(account);
 
@@ -49,14 +49,14 @@ public class ServiceAccount implements IServiceAccount{
 
     @Override
     public ResponseEntity<Account> getAccountByID(UUID id) {
-        Account account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+        Account account = this.accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
 
         return ResponseEntity.ok(account);
     }
 
     @Override
     public ResponseEntity<List<Account>> findAllAccounts() {
-        List<Account> accounts = accountRepository.findAll();
+        List<Account> accounts = this.accountRepository.findAll();
 
         return ResponseEntity.ok(accounts);
     }
