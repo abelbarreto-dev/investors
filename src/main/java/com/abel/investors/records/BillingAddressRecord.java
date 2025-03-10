@@ -1,5 +1,5 @@
 package com.abel.investors.records;
 
-import java.util.UUID;
+import com.abel.investors.models.Account;
 
-public record BillingAddressRecord(UUID account, String street, Long number) { }
+public record BillingAddressRecord(Account account, String street, Long number) { }
