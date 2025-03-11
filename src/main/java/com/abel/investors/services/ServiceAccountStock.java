@@ -29,7 +29,7 @@ public class ServiceAccountStock implements IServiceAccountStock {
         AccountStock accStock = this.accountStockRepository.findById(id).orElse(null);
 
         if (accStock == null) {
-            throw new AccountStockException("Account Stock Not Found For Update");
+            throw new AccountStockException("Account Stock Not Found For Update", 404);
         }
 
         accStock.setAccount(accountStock.account());
@@ -45,7 +45,7 @@ public class ServiceAccountStock implements IServiceAccountStock {
         AccountStock accStock = this.accountStockRepository.findById(id).orElse(null);
 
         if (accStock == null) {
-            throw new AccountStockException("Account Stock Not Found For Delete");
+            throw new AccountStockException("Account Stock Not Found For Delete", 404);
         }
 
         this.accountStockRepository.delete(accStock);
@@ -58,7 +58,7 @@ public class ServiceAccountStock implements IServiceAccountStock {
         AccountStock accStock = this.accountStockRepository.findById(id).orElse(null);
 
         if (accStock == null) {
-            throw new AccountStockException("Account Stock Not Found");
+            throw new AccountStockException("Account Stock Not Found", 404);
         }
 
         return ResponseEntity.ok().body(accStock);
